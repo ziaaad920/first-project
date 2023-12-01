@@ -8,10 +8,21 @@ on:
 jobs: 
       build:
           runs-on: ubuntu-latest
+
           steps:
-                  - name: 'Test Github actions'
-                    run: pwd
-                  - name: 'Test Printing'
-                    run: echo ziad
+            - uses: actions/checkout@v3
+
+            - name: 'Login to Docker hub'
+              run: docker login --username ${{ secrets.DOCKER_USERNAME }} --pasword ${{ secrets.DOCKER_TOKEN }}
+
+            - name: 'Building Docker hub'
+              run: docker build -t --username ${{ secrets.DOCKER_USERNAME }}/myimage .
+
+            - name: 'Pushing to Docker hub'
+              run: docker push ${{ secrets.DOCKER_USERNAME }}/myimage
+
+
+
+
             
           
